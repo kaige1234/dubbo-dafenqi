@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xl.product.income.dao.IncomeActivityDao" >
+    <!-- 根据类型查询用户 -->
+    <select id="findPageIncomeActivity" resultType="com.xl.product.income.model.IncomeActivity">
+    	SELECT lId,strName,strStartDate,strEndDate,lMoney,nInterest,strTerm,strRange,nStatus,nBear,nBizType,
+    	lCreatorId,strCreatorName,dtCreatorTime,lModifierId,strModifier,dtModifierTime,strDeptCode0,strDeptCode1,strDeptCode2,
+    	strDeptCode3,strDeptCode4,strDeptCode5,strDeptCode6,strDeptCode7,strDeptCode8,strDeptCode9  FROM tbIncomeActivity 
+    	<where>
+    		<if test="query.lId != null and query.lId != ''">
+				and lId=#{query.lId}
+			</if>
+    		<if test="query.strName != null and query.strName != ''">
+				and strName=#{query.strName}
+			</if>
+			<if test="query.strStartDate != null and query.strStartDate != ''">
+				and strStartDate=#{query.strStartDate}
+			</if>
+			<if test="query.strEndDate != null and query.strEndDate != ''">
+				and strEndDate=#{query.strEndDate}
+			</if>
+			<if test="query.lMoney != null and query.lMoney != ''">
+				and lMoney=#{query.lMoney}
+			</if>
+			<if test="query.nInterest != null and query.nInterest != ''">
+				and nInterest=#{query.nInterest}
+			</if>
+			<if test="query.strTerm != null and query.strTerm != ''">
+				and strTerm=#{query.strTerm}
+			</if>
+			<if test="query.strRange != null and query.strRange != ''">
+				and strRange=#{query.strRange}
+			</if>
+			<if test="query.nStatus != null and query.nStatus != ''">
+				and nStatus=#{query.nStatus}
+			</if>
+			<if test="query.nBear != null and query.nBear != ''">
+				and nBear=#{query.nBear}
+			</if>
+			<if test="query.nBizType != null and query.nBizType != ''">
+				and nBizType=#{query.nBizType}
+			</if>
+			<if test="query.lCreatorId != null and query.lCreatorId != ''">
+				and lCreatorId=#{query.lCreatorId}
+			</if>
+    	</where>
+    	order by lId
+    </select>
+</mapper>

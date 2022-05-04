@@ -1,0 +1,15 @@
+1.数据维度定义
+	格式：
+		~title=学校&name=middleSchool&data=中学~
+    说明：
+    	如此此格式写在样式单元格中，如果没有定义title属性，则默认使用单元格的值，如果没有定义data属性，则默认使用单元格的值
+    仅当title、name、data三个属性都有值时，则认为此维度信息确定.
+
+2.数据定义
+	格式：
+		1.表单型数据
+			#gridmodel=formGrid&title=姓名&name=userName&datatype=Number&isnull=true&dimensions=aaa,bbb,ccc#
+		2.列表型数据
+		   #gridmodel=listGrid&title=姓名&name=userName&datatype=Number&isnull=true&dimensions=aaa,bbb,ccc#
+		3.固定列表型数据
+		  #gridmodel=fixListGrid&sumrow=4&title=姓名&name=userName&datatype=Number&isnull=true&dimensions=aaa,bbb,ccc#

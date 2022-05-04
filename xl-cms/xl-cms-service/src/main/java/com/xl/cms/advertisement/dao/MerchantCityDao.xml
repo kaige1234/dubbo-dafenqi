@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xl.cms.advertisement.dao.MerchantCityDao" >
+    <!-- 根据类型查询用户 -->
+    <select id="findPageMerchantCity" resultType="com.xl.cms.advertisement.model.MerchantCity">
+    	SELECT *  FROM tbMerchantCity order by lId
+    </select>
+     <select id="findById" resultType="com.xl.cms.advertisement.model.MerchantCity">
+    	SELECT *  FROM tbMerchantCity where lId=${lId}
+    </select>
+    <select id="findCodeByArea" resultType="com.xl.cms.advertisement.query.MerchantCityQuery">
+    	SELECT t1.strCode strAreaCode,t1.strName strAreaName,
+			 t2.strCode strCityCode,t2.strName strCityName,
+			 t3.strCode strProvinceCode,t3.strName strProvinceName 
+		FROM
+			(SELECT * FROM tbMerchantCity WHERE (strName=#{query.strAreaName} OR strShortName = #{query.strAreaName}) AND nLevel=3) t1
+			LEFT JOIN tbMerchantCity t2 ON t2.strCode=t1.strParentCode 
+			LEFT JOIN tbMerchantCity t3 ON t3.strCode=t2.strParentCode 
+		LIMIT 1
+    </select>
+    <select id="findCodeByCity" resultType="com.xl.cms.advertisement.query.MerchantCityQuery">
+    	SELECT t2.strCode strCityCode,t2.strName strCityName,
+			 t3.strCode strProvinceCode,t3.strName strProvinceName 
+		FROM
+			(SELECT * FROM tbMerchantCity WHERE (strName=#{query.strCityName} OR strShortName = #{query.strCityName}) AND nLevel=2) t2
+			LEFT JOIN tbMerchantCity t3 ON t3.strCode=t2.strParentCode 
+		LIMIT 1
+    </select>
+    <select id="findCodeByProvince" resultType="com.xl.cms.advertisement.query.MerchantCityQuery">
+    	SELECT t.strCode strProvinceCode,t.strName strProvinceName 
+		FROM tbMerchantCity  t WHERE (strName=#{query.strProvinceName} OR strShortName = #{query.strProvinceName}) AND nLevel=1 
+		LIMIT 1
+    </select>
+    <insert id="add" parameterType="com.xl.cms.advertisement.model.MerchantCity">
+    	insert into tbMerchantCity (strName) values(#{obj.strName})
+    	<selectKey resultType="_long" keyProperty="lId" order="AFTER">
+		    select @@IDENTITY as id
+		</selectKey>
+    </insert>
+    
+    <delete id="deleteById" parameterType="java.lang.Long">
+    	delete from tbMerchantCity where lId=#{lId}
+    </delete>
+</mapper>

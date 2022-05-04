@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="xl-sso-server" />
+        <module name="xl-cms-web" />
+        <module name="xl-productboss-api" />
+        <module name="xl.es" />
+        <module name="xl-edb" />
+        <module name="xl-cms-api" />
+        <module name="xl-commons" />
+        <module name="xl-sso-client" />
+        <module name="xl-cms-service" />
+        <module name="xl-redis" />
+        <module name="xl-productboss-service" />
+        <module name="xl-productboss-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="xl-cms" target="1.5" />
+      <module name="xl-cms-api" target="1.5" />
+      <module name="xl-cms-service" target="1.5" />
+      <module name="xl-cms-web" target="1.5" />
+      <module name="xl-commons" target="1.5" />
+      <module name="xl-edb" target="1.5" />
+      <module name="xl-productboss" target="1.5" />
+      <module name="xl-productboss-api" target="1.5" />
+      <module name="xl-productboss-service" target="1.5" />
+      <module name="xl-productboss-web" target="1.5" />
+      <module name="xl-redis" target="1.5" />
+      <module name="xl-sso" target="1.5" />
+      <module name="xl-sso-client" target="1.5" />
+      <module name="xl-sso-server" target="1.5" />
+      <module name="xl.es" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

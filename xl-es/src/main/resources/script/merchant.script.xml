@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//script.org//DTD Mapper 3.0//EN"  "http://script.org/dtd/script-mapper.dtd">
+<mapper namespace="merchant">
+	<!-- 默认查询 -->
+	<select id="merchantQuery" index="xl" type="merchant" resultType="com.xl.es.data.doc.Merchant">
+		{
+	      "from": ${startIndex},
+    	  "size": ${pageSize},
+    	  "query": {
+		    "bool": {
+		      "must": [
+		      	{"exists":{"field":"lId"}}
+		      	<if test="strProvinceCode!=null and strProvinceCode!=''">
+		        ,{
+		          "match": {
+		            "strProvinceCode": #{strProvinceCode}
+		          }
+		        }
+		        </if>
+		       <if test="strCityCode!=null and strCityCode!=''">
+		        ,{
+		          "match": {
+		            "strCityCode": #{strCityCode}
+		          }
+		        }
+		        </if>
+		        <if test="strAreaCode!=null and strAreaCode!=''">
+		        ,{
+		          "match": {
+		            "strAreaCode": #{strAreaCode}
+		          }
+		        }
+		        </if>
+		        <if test="strStreetCode!=null and strStreetCode!=''">
+		        ,{
+		          "match": {
+		            "strStreetCode": #{strStreetCode}
+		          }
+		        }
+		        </if>
+		        <if test="nBusiness!=null and nBusiness!=''">
+		        ,{
+		          "match": {
+		            "nBusinessId": #{nBusiness}
+		          }
+		        }
+		        </if>
+		        <if test="nBusiness2!=null and nBusiness2!=''">
+		        ,{
+		          "match": {
+		            "nBusiness2Id": #{nBusiness2}
+		          }
+		        }
+		        </if>
+		        <if test="keyword!=null and keyword!=''">
+		        ,{
+		          "multi_match": {
+		            "query": #{keyword},
+		            "fields": [
+		              "strName",
+		              "strBusinessRange",
+		              "goods.strGoodsName"
+		            ]
+		          }
+		        }
+		        </if>
+		      ]
+		    }
+		  }
+		 <if test="sort!=null and sort=='range'.toString()">
+		  ,"sort": [
+		    {
+		      "_geo_distance": {
+		        "strLongitudeAndLatitude": {
+		          "lat":  #{lat},
+		          "lon": #{lon}
+		        },
+		        "order":         "asc",
+		        "unit":          "km", 
+		        "distance_type": "plane" 
+		      }
+		    }
+		  ]
+		  </if>
+		  
+		  <if test="sort!=null and sort=='start'.toString()">
+		  ,"sort": {
+		    "lHistoryAmount": {
+		      "order": "desc"
+		    }
+		  }
+		  </if>
+		  
+		  <if test="sort!=null and sort=='near'.toString()">
+		  ,"sort": {
+		    "dtFirstAuditTime": {
+		      "order": "desc"
+		    }
+		  }
+		  </if>
+		}
+	</select>
+</mapper>

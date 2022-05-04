@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rdb="http://www.dangdang.com/schema/ddframe/rdb"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context 
+                        http://www.springframework.org/schema/context/spring-context.xsd 
+                        http://www.dangdang.com/schema/ddframe/rdb 
+                        http://www.dangdang.com/schema/ddframe/rdb/rdb.xsd 
+                        http://www.springframework.org/schema/util 
+                        http://www.springframework.org/schema/util/spring-util-3.1.xsd
+                        " default-autowire="byName" default-lazy-init="false">
+	<util:properties id="dbProps" location="classpath:db.properties" />
+	
+	<bean id="platform" class="com.xl.sso.util.Platform"/>
+	<bean id="tikietService" class="com.xl.sso.service.impl.MemoryTikietServiceImpl"/>
+	<bean id="loginService" class="com.xl.sso.service.impl.DatabaseLoginService">
+		<property name="querySql" value="select id,username from user where username=? and password=?"></property>
+		<property name="resultList">
+			<list>
+				<value>id</value>
+				<value>username</value>
+			</list>
+		</property>
+	</bean>
+	
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="#{dbProps['jdbc.driverClassName']}" />
+        <property name="url" value="#{dbProps['jdbc.url']}" />
+        <property name="username" value="#{dbProps['jdbc.username']}" />
+        <property name="password" value="#{dbProps['jdbc.password']}" />
+    </bean>
+    
+</beans>

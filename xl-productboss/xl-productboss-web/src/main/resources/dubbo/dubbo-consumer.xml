@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+    http://www.springframework.org/schema/util 
+    http://www.springframework.org/schema/util/spring-util-3.1.xsd
+    ">
+    <util:properties id="dubbops" location="classpath:dubbo.properties" />
+	<dubbo:application name="#{dubbops['dubbo.application.name']}" owner="#{dubbops['dubbo.application.owner']}" organization="#{dubbops['dubbo.application.organization']}" />
+	<dubbo:registry address="#{dubbops['dubbo.zkHosts']}" />
+	<dubbo:consumer id="cs"  timeout="60000" retries="0" check="false" group="#{dubbops['dubbo.group.name']}" version="0.0.0"/>
+	<dubbo:reference id="incomeActivityService" interface="com.xl.product.income.service.IncomeActivityService" consumer="cs" protocol="dubbo"/>
+</beans> 

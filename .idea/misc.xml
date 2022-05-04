@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/xl-cms/xl-cms-web" />
+    <file type="web" url="file://$PROJECT_DIR$/xl-es" />
+    <file type="web" url="file://$PROJECT_DIR$/xl-productboss/xl-productboss-web" />
+    <file type="web" url="file://$PROJECT_DIR$/xl-sso/xl-sso-server" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/xl-cms/pom.xml" />
+        <option value="$PROJECT_DIR$/xl-commons/pom.xml" />
+        <option value="$PROJECT_DIR$/xl-edb/pom.xml" />
+        <option value="$PROJECT_DIR$/xl-es/pom.xml" />
+        <option value="$PROJECT_DIR$/xl-productboss/pom.xml" />
+        <option value="$PROJECT_DIR$/xl-redis/pom.xml" />
+        <option value="$PROJECT_DIR$/xl-sso/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_14" default="false" project-jdk-name="1.8 (2)" project-jdk-type="JavaSDK" />
+</project>

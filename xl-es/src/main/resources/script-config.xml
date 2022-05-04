@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//script.org//DTD Config 3.0//EN"  "http://script.org/dtd/script-config.dtd">
+<configuration develop="false">
+<mappers>
+	<mapper resource="script/merchant.script.xml"/>
+</mappers>
+</configuration>

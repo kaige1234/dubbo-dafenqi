@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="xl-productboss-web:war">
+    <output-path>$PROJECT_DIR$/xl-productboss/xl-productboss-web/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>xl-productboss-web</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="productboss.war">
+      <element id="artifact" artifact-name="xl-productboss-web:war exploded" />
+    </root>
+  </artifact>
+</component>

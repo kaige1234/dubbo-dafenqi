@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rdb="http://www.dangdang.com/schema/ddframe/rdb"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context 
+                        http://www.springframework.org/schema/context/spring-context.xsd 
+                        http://www.dangdang.com/schema/ddframe/rdb 
+                        http://www.dangdang.com/schema/ddframe/rdb/rdb.xsd 
+                        http://www.springframework.org/schema/util 
+                        http://www.springframework.org/schema/util/spring-util-3.1.xsd
+                        " default-autowire="byName" default-lazy-init="false">
+	<util:properties id="dbProps" location="classpath:db.properties" />
+
+	<bean id="db_master"  class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="driverClassName" value="#{dbProps['jdbc.driverClassName']}" />
+        <property name="url" value="#{dbProps['jdbc.url']}" />
+        <property name="username" value="#{dbProps['jdbc.username']}" />
+        <property name="password" value="#{dbProps['jdbc.password']}" />
+	</bean>
+	
+    <bean id="db_slave_0" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+       <property name="driverClassName" value="#{dbProps['jdbc.driverClassName']}" />
+        <property name="url" value="#{dbProps['jdbc.url_salve']}" />
+        <property name="username" value="#{dbProps['jdbc.username']}" />
+        <property name="password" value="#{dbProps['jdbc.password']}" />
+    </bean>
+    
+    <bean id="db_slave_1" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="#{dbProps['jdbc.driverClassName']}" />
+        <property name="url" value="#{dbProps['jdbc.url_salve']}" />
+        <property name="username" value="#{dbProps['jdbc.username']}" />
+        <property name="password" value="#{dbProps['jdbc.password']}" />
+    </bean>
+
+    <!--从表strategy-type   ROUND_ROBIN=轮循     RANDOM=随机 -->  
+    <rdb:master-slave-data-source id="shardingDataSource" master-data-source-ref="db_master" slave-data-sources-ref="db_slave_0,db_slave_1" strategy-type="ROUND_ROBIN"/>
+    
+</beans>

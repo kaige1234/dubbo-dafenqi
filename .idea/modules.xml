@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/xl-cms/xl-cms.iml" filepath="$PROJECT_DIR$/xl-cms/xl-cms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xl-cms/xl-cms-api/xl-cms-api.iml" filepath="$PROJECT_DIR$/xl-cms/xl-cms-api/xl-cms-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xl-cms/xl-cms-service/xl-cms-service.iml" filepath="$PROJECT_DIR$/xl-cms/xl-cms-service/xl-cms-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xl-cms/xl-cms-web/xl-cms-web.iml" filepath="$PROJECT_DIR$/xl-cms/xl-cms-web/xl-cms-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xl-commons/xl-commons.iml" filepath="$PROJECT_DIR$/xl-commons/xl-commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xl-edb/xl-edb.iml" filepath="$PROJECT_DIR$/xl-edb/xl-edb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xl-productboss/xl-productboss.iml" filepath="$PROJECT_DIR$/xl-productboss/xl-productboss.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xl-productboss/xl-productboss-api/xl-productboss-api.iml" filepath="$PROJECT_DIR$/xl-productboss/xl-productboss-api/xl-productboss-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xl-productboss/xl-productboss-service/xl-productboss-service.iml" filepath="$PROJECT_DIR$/xl-productboss/xl-productboss-service/xl-productboss-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xl-productboss/xl-productboss-web/xl-productboss-web.iml" filepath="$PROJECT_DIR$/xl-productboss/xl-productboss-web/xl-productboss-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xl-redis/xl-redis.iml" filepath="$PROJECT_DIR$/xl-redis/xl-redis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xl-sso/xl-sso.iml" filepath="$PROJECT_DIR$/xl-sso/xl-sso.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xl-sso/xl-sso-client/xl-sso-client.iml" filepath="$PROJECT_DIR$/xl-sso/xl-sso-client/xl-sso-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xl-sso/xl-sso-server/xl-sso-server.iml" filepath="$PROJECT_DIR$/xl-sso/xl-sso-server/xl-sso-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xl-es/xl.es.iml" filepath="$PROJECT_DIR$/xl-es/xl.es.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/达分期项目.iml" filepath="$PROJECT_DIR$/.idea/达分期项目.iml" />
+    </modules>
+  </component>
+</project>

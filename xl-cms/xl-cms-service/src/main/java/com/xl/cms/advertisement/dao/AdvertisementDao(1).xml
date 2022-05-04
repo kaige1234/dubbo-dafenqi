@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xl.cms.advertisement.dao.AdvertisementDao">
+	<!-- 根据类型查询用户 -->
+	<select id="findPageAdvertisement" resultType="com.xl.cms.advertisement.model.Advertisement">
+		SELECT
+			lId,strTitle,strShowTitle,strShowDescribe,strActivityLabel,nPositionCode,strPositionName,nRegionType,strProvinceCode,strProvinceName,
+			strCityCode,strCityName,strAreaCode,strAreaName,strImgPath,strHyperLinkUrl,nStateType,dtStartTime,dtEndTime,nSortNo,lModifyUserId,strModifyUserName,
+			dtModifyTime,tsRefreshTime
+		FROM 
+			tbAdvertisement 
+		WHERE 1=1 
+		<where>
+<!-- 			<if test="query.lCreatorId != null and query.lCreatorId != ''"> -->
+<!-- 				and lCreatorId=#{query.lCreatorId} -->
+<!-- 			</if> -->
+    	</where>
+		ORDER BY lId
+	</select>
+	
+	<select id="findById" resultType="com.xl.cms.advertisement.model.Advertisement">
+		SELECT
+			lId,strTitle,strShowTitle,strShowDescribe,strActivityLabel,nPositionCode,strPositionName,nRegionType,strProvinceCode,strProvinceName,
+			strCityCode,strCityName,strAreaCode,strAreaName,strImgPath,strHyperLinkUrl,nStateType,dtStartTime,dtEndTime,nSortNo,lModifyUserId,strModifyUserName,
+			dtModifyTime,tsRefreshTime
+		FROM 
+			tbAdvertisement 
+		WHERE lId=${lId}
+	</select>
+
+	<insert id="add" parameterType="com.xl.cms.advertisement.model.Advertisement">
+		INSERT INTO tbAdvertisement 
+			(strTitle,strShowTitle,strShowDescribe,strActivityLabel,nPositionCode,strPositionName,nRegionType,strProvinceCode,strProvinceName,
+			strCityCode,strCityName,strAreaCode,strAreaName,strImgPath,strHyperLinkUrl,nStateType,dtStartTime,dtEndTime,nSortNo,lModifyUserId,
+			strModifyUserName,dtModifyTime,tsRefreshTime) 
+		VALUES
+			(#{obj.strTitle},#{obj.strShowTitle},#{obj.strShowDescribe},#{obj.strActivityLabel},#{obj.nPositionCode},#{obj.strPositionName},
+			#{obj.nRegionType},#{obj.strProvinceCode},#{obj.strProvinceName},#{obj.strCityCode},#{obj.strCityName},#{obj.strAreaCode},#{obj.strAreaName},
+			#{obj.strImgPath},#{obj.strHyperLinkUrl},#{obj.nStateType},#{obj.dtStartTime},#{obj.dtEndTime},#{obj.nSortNo},#{obj.lModifyUserId},
+			#{obj.strModifyUserName},#{obj.dtModifyTime},#{obj.tsRefreshTime})
+		<selectKey resultType="_long" keyProperty="lId" order="AFTER">
+			SELECT @@IDENTITY AS id
+		</selectKey>
+	</insert>
+
+	<delete id="deleteById" parameterType="java.lang.Long">
+		DELETE FROM tbAdvertisement WHERE lId=#{lId}
+	</delete>
+	
+	<update id="updatebylId" parameterType="com.xl.cms.advertisement.model.Advertisement">
+		update tbAdvertisement
+		<set>
+			<if test="obj.lCreatorId != null and obj.lCreatorId != ''">
+				lCreatorId=#{obj.lCreatorId}
+			</if>
+		</set>
+		<where>
+				lId=#{obj.lId}
+		</where>
+	</update>
+	
+	
+	<!-- 查询地区广告  -->
+	<select id="findPageByAppGprsArea" resultType="com.xl.cms.advertisement.model.Advertisement">
+		select lId, strTitle, strShowTitle,strShowDescribe,strActivityLabel, nPositionCode, strPositionName, nRegionType, strProvinceCode, strProvinceName, strCityCode, strCityName, strAreaCode,
+			strAreaName, strImgPath, strHyperLinkUrl, nStateType, dtStartTime, dtEndTime, nSortNo, lModifyUserId, strModifyUserName, dtModifyTime,
+		IF(
+			dtEndTime = '9999-12-31 00:00:00','31天',
+			IF(
+				CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d'))) / 86400) &lt;= 1,
+				CONCAT(CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d %H'))) / 3600),"小时"),
+				IF(
+					CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d'))) / 86400) > 30,'31天',
+					CONCAT(CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d'))) / 86400),'天')
+				)
+			)
+		) AS strRemainingTime
+		from tbAdvertisement
+		where nStateType = 1 and nRegionType = 2 and nPositionCode = #{query.nPositionCode}
+			and (strProvinceCode = #{query.strProvinceCode} or strProvinceName = #{query.strProvinceName})
+			and (strCityCode = #{query.strCityCode} or strCityName = #{query.strCityName})
+			and (strAreaCode = #{query.strAreaCode} or strAreaName = #{query.strAreaName})
+			and dtEndTime &gt; NOW() AND dtStartTime &lt;= NOW()
+		order by nSortNo
+	</select>
+	<!-- 查询市级广告  -->
+	<select id="findPageByAppGprsCity" resultType="com.xl.cms.advertisement.model.Advertisement">
+		SELECT lId, strTitle, strShowTitle,strShowDescribe,strActivityLabel,nPositionCode, strPositionName, nRegionType, strProvinceCode, strProvinceName, strCityCode, strCityName, strAreaCode,
+			strAreaName, strImgPath, strHyperLinkUrl, nStateType, dtStartTime, dtEndTime, nSortNo, lModifyUserId, strModifyUserName, dtModifyTime,
+			IF(dtEndTime = '9999-12-31 00:00:00','31天',
+			IF(
+			CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d'))) / 86400) &lt;= 1,
+			CONCAT(CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d %H'))) / 3600),"小时"),
+			IF(
+			CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d'))) / 86400) > 30,'31天',
+			CONCAT(CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d'))) / 86400),'天')
+			))) AS strRemainingTime
+		FROM tbAdvertisement
+		WHERE nStateType = 1 and nRegionType = 2 and nPositionCode = #{query.nPositionCode}
+			and (strProvinceCode = #{query.strProvinceCode} or strProvinceName = #{query.strProvinceName})
+			and (strCityCode = #{query.strCityCode} or strCityName = #{query.strCityName})
+			and strAreaCode = '' and strAreaName = ''
+			and dtEndTime &gt; NOW() AND dtStartTime &lt;= NOW()
+		order by nSortNo
+	</select>
+	<!-- 查询省级广告  -->
+	<select id="findPageByAppGprsProvince" resultType="com.xl.cms.advertisement.model.Advertisement">
+		SELECT lId, strTitle, strShowTitle,strShowDescribe,strActivityLabel,nPositionCode, strPositionName, nRegionType, strProvinceCode, strProvinceName, strCityCode, strCityName, strAreaCode,
+			strAreaName, strImgPath, strHyperLinkUrl, nStateType, dtStartTime, dtEndTime, nSortNo, lModifyUserId, strModifyUserName, dtModifyTime,
+			IF(
+				dtEndTime = '9999-12-31 00:00:00','31天',
+			IF(
+				CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d'))) / 86400) &lt;= 1,
+				CONCAT(CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d %H'))) / 3600),"小时"),
+			IF(
+				CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d'))) / 86400) > 30,'31天',
+				CONCAT(CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d'))) / 86400),'天')
+			))) AS strRemainingTime
+		FROM tbAdvertisement
+		WHERE nStateType = 1 and nRegionType = 2 and nPositionCode = #{query.nPositionCode}
+			and (strProvinceCode = #{query.strProvinceCode} or strProvinceName = #{query.strProvinceName})
+			and strCityCode = '' AND strCityName = ''
+			and strAreaCode = '' and strAreaName = ''
+			and dtEndTime &gt; NOW() AND dtStartTime &lt;= NOW()
+		ORDER BY nSortNo
+	</select>
+	<!-- 查询国家级广告  -->
+	<select id="findPageByAppGprsCountry" resultType="com.xl.cms.advertisement.model.Advertisement">
+		select lId, strTitle, strShowTitle,strShowDescribe,strActivityLabel,nPositionCode, strPositionName, nRegionType, strProvinceCode, strProvinceName, strCityCode, strCityName, strAreaCode,
+			strAreaName, strImgPath, strHyperLinkUrl, nStateType, dtStartTime, dtEndTime, nSortNo, lModifyUserId, strModifyUserName, dtModifyTime,
+			IF(
+			dtEndTime = '9999-12-31 00:00:00','31天',
+			IF(
+			CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d'))) / 86400) &lt;= 1,
+			CONCAT(CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d %H'))) / 3600),"小时"),
+			IF(
+			CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d'))) / 86400) > 30,'31天',
+			CONCAT(CEILING((UNIX_TIMESTAMP(dtEndTime) - UNIX_TIMESTAMP(DATE_FORMAT(NOW(),'%y-%m-%d'))) / 86400),'天')
+			))) AS strRemainingTime
+		FROM tbAdvertisement
+		WHERE nStateType = 1 and nRegionType = 1 and nPositionCode = #{query.nPositionCode} and dtEndTime &gt; NOW() AND dtStartTime &lt;= NOW() 
+		ORDER BY nSortNo
+	</select>
+	<select id="findPageByAppGprBottomCity" resultType="com.xl.cms.advertisement.model.Advertisement">
+		SELECT 
+			lId, strTitle, nPositionCode, strPositionName, nRegionType, strProvinceCode, strProvinceName, strCityCode, strCityName, strAreaCode, strAreaName, strImgPath, strHyperLinkUrl, nStateType,
+		 	dtStartTime, dtEndTime, nSortNo, lModifyUserId, strModifyUserName, dtModifyTime 
+		FROM tbAdvertisement 
+		WHERE 
+			nStateType = 1 and nRegionType = 2 and nPositionCode =1   and  (strCityCode = #{query.strCityCode} or strCityName = #{query.strCityName}) and (strAreaCode IS NULL OR CHAR_LENGTH(strAreaCode)=0) 
+			AND (strAreaName IS NULL OR CHAR_LENGTH(strAreaName)=0)  and dtEndTime &gt; NOW() AND dtStartTime &lt;= NOW() 
+		ORDER BY nSortNo limit 0,1
+	</select>
+	<select id="findPageByAppGprBottom" resultType="com.xl.cms.advertisement.model.Advertisement">
+		SELECT 
+			lId, strTitle, nPositionCode, strPositionName, nRegionType, strProvinceCode, strProvinceName, strCityCode, strCityName, strAreaCode, strAreaName, strImgPath, strHyperLinkUrl, nStateType, 
+			dtStartTime, dtEndTime, nSortNo, lModifyUserId, strModifyUserName, dtModifyTime 
+		FROM tbAdvertisement 
+		WHERE 
+			nStateType = 1 and nRegionType = 1 and nPositionCode =1 and dtEndTime &gt; NOW() AND dtStartTime &lt;= NOW() 
+		ORDER by nSortNo limit 0,1
+	</select>
+	
+</mapper>
